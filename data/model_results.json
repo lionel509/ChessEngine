@@ -1,0 +1,42 @@
+{
+    "knn_basic": {
+        "config": {
+            "n_neighbors": 3,
+            "weights": "uniform",
+            "metric": "euclidean"
+        },
+        "train_accuracy": 0.3508256880733945,
+        "val_accuracy": 0.01894849212703496,
+        "model_path": "data/models\\knn_basic.pkl"
+    },
+    "knn_weighted": {
+        "config": {
+            "n_neighbors": 5,
+            "weights": "distance",
+            "metric": "euclidean"
+        },
+        "train_accuracy": 0.9909591326105087,
+        "val_accuracy": 0.02121697357886309,
+        "model_path": "data/models\\knn_weighted.pkl"
+    },
+    "knn_large": {
+        "config": {
+            "n_neighbors": 7,
+            "weights": "distance",
+            "metric": "euclidean"
+        },
+        "train_accuracy": 0.9909924937447874,
+        "val_accuracy": 0.022551374432879637,
+        "model_path": "data/models\\knn_large.pkl"
+    },
+    "knn_manhattan": {
+        "config": {
+            "n_neighbors": 3,
+            "weights": "distance",
+            "metric": "manhattan"
+        },
+        "train_accuracy": 0.991092577147623,
+        "val_accuracy": 0.017614091273018415,
+        "model_path": "data/models\\knn_manhattan.pkl"
+    }
+}
