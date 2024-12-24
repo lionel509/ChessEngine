@@ -5,6 +5,9 @@ Does it work well, no.
 Is it good at chess, no. 
 Was it fun building, no. 
 
+# I DID NOT BUILD STOCKFISH. STOCK FISH WAS BUILT BY OTHER PEOPLE 
+# READ THE STOCKFISH READ ME FOR MORE INFO
+
 ## Features
 
 - **Multiple Training Models**:
