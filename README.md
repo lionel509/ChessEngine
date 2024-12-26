@@ -1,6 +1,12 @@
 # Chess Engine with KNN Training
 
 An intelligent chess engine that uses K-Nearest Neighbors (KNN) algorithm to learn and play chess. The engine features continuous training capabilities, visualization tools, and the ability to play against Stockfish.
+Does it work well, no.
+Is it good at chess, no. 
+Was it fun building, no. 
+
+# I DID NOT BUILD STOCKFISH. STOCK FISH WAS BUILT BY OTHER PEOPLE 
+# READ THE STOCKFISH READ ME FOR MORE INFO
 
 ## Features
 
