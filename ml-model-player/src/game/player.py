@@ -1,6 +1,6 @@
 import chess
 import chess.svg
-from models.loader import load_models
+from src.models.loader import load_models
 
 class Player:
     def __init__(self, models):

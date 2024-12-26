@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 import joblib
-from src.models.knn_model import KNNChessModel  # Keep this import
+from src.models.knn_model import KNNChessModel  
 from src.utils.data_loader import create_data_loaders
 import multiprocessing as mp
 from tqdm import tqdm

@@ -12,43 +12,54 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 from src.models.knn_model import KNNChessModel
 
 class ModelEnsemble:
-    def __init__(self, models: List[Any], memory_size: int = 5):
+    def __init__(self, models: List[Any]):
         self.models = models
-        self.move_history = deque(maxlen=memory_size)
-        self.last_position = None
+        self.move_history = deque(maxlen=10)  # Track last 10 moves
+        self.position_history = {}  # Track position frequencies
         
     def predict(self, board_state: np.ndarray) -> Tuple[int, int]:
-        # Get all possible predictions from models
+        # Get predictions from all models
         predictions = []
         for model in self.models:
             pred = model.predict(board_state.reshape(1, -1))
             predictions.append(pred)
-            
+        
         # Convert predictions to moves
         moves = [self._decode_move(p[0]) for p in predictions]
         
-        # Filter out recent moves to prevent repetition
-        valid_moves = []
+        # Score moves based on history
+        scored_moves = []
+        pos_key = self._get_position_key(board_state)
+        
         for move in moves:
-            if move not in self.move_history:
-                valid_moves.append(move)
-                
-        # If no valid moves, reset history and use any move
-        if not valid_moves:
-            self.move_history.clear()
-            valid_moves = moves
-            
-        # Select best move (can be enhanced with scoring)
-        selected_move = valid_moves[0]
+            score = self._score_move(move, pos_key)
+            scored_moves.append((score, move))
+        
+        # Select best non-repetitive move
+        scored_moves.sort(reverse=True)  # Higher scores are better
+        selected_move = scored_moves[0][1]
         
         # Update history
         self.move_history.append(selected_move)
-        self.last_position = board_state.copy()
+        self.position_history[pos_key] = self.position_history.get(pos_key, 0) + 1
         
         return selected_move
+    
+    def _score_move(self, move: Tuple[int, int], pos_key: str) -> float:
+        base_score = 1.0
         
+        # Penalize repeated positions
+        pos_repeat_penalty = self.position_history.get(pos_key, 0) * 0.2
+        
+        # Penalize moves that were recently played
+        recent_move_penalty = 0.1 if move in self.move_history else 0
+        
+        return base_score - pos_repeat_penalty - recent_move_penalty
+    
+    def _get_position_key(self, board_state: np.ndarray) -> str:
+        return hash(board_state.tobytes())
+    
     def _decode_move(self, move_encoded: int) -> Tuple[int, int]:
-        """Decode model output to chess move"""
         start_square = move_encoded // 64
         end_square = move_encoded % 64
         return (start_square, end_square)
